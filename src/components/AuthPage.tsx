@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import Icon from '@/components/ui/icon';
 
 interface AuthPageProps {
-  onLogin: (userData: { phone: string; fullName: string; position: string }) => void;
+  onLogin: (userData: { phone: string; fullName: string; position: string; isAdmin: boolean }) => void;
 }
 
 export default function AuthPage({ onLogin }: AuthPageProps) {
@@ -14,13 +14,17 @@ export default function AuthPage({ onLogin }: AuthPageProps) {
   const [phone, setPhone] = useState('');
   const [fullName, setFullName] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    const isAdmin = phone === 'admin' && password === 'admin';
+    
     if (isLogin) {
-      onLogin({ phone, fullName: 'Иван Петров', position: 'Наставник' });
+      onLogin({ phone, fullName: isAdmin ? 'Администратор' : 'Иван Петров', position: isAdmin ? 'Администратор' : 'Наставник', isAdmin });
     } else {
-      onLogin({ phone, fullName, position: 'Наставник' });
+      onLogin({ phone, fullName, position: 'Наставник', isAdmin: false });
     }
   };
 
@@ -102,15 +106,24 @@ export default function AuthPage({ onLogin }: AuthPageProps) {
                 <Icon name="Lock" size={16} />
                 Пароль
               </Label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                className="h-11 border-2 focus:border-primary transition-colors"
-              />
+              <div className="relative">
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className="h-11 border-2 focus:border-primary transition-colors pr-10"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <Icon name={showPassword ? "EyeOff" : "Eye"} size={18} />
+                </button>
+              </div>
             </div>
 
             <Button 

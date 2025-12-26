@@ -12,6 +12,7 @@ interface User {
   phone: string;
   fullName: string;
   position: string;
+  isAdmin: boolean;
 }
 
 const App = () => {
