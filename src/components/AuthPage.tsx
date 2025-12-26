@@ -22,9 +22,19 @@ export default function AuthPage({ onLogin }: AuthPageProps) {
     const isAdmin = phone === 'admin' && password === 'admin';
     
     if (isLogin) {
-      onLogin({ phone, fullName: isAdmin ? 'Администратор' : 'Иван Петров', position: isAdmin ? 'Администратор' : 'Наставник', isAdmin });
+      onLogin({ 
+        phone, 
+        fullName: isAdmin ? 'Администратор' : 'Иван Петров', 
+        position: isAdmin ? 'Администратор' : 'Наставник', 
+        isAdmin 
+      });
     } else {
-      onLogin({ phone, fullName, position: 'Наставник', isAdmin: false });
+      onLogin({ 
+        phone, 
+        fullName: fullName || 'Новый сотрудник', 
+        position: 'Наставник', 
+        isAdmin: false 
+      });
     }
   };
 
