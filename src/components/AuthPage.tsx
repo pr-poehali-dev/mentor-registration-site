@@ -144,16 +144,40 @@ export default function AuthPage({ onLogin }: AuthPageProps) {
             </Button>
           </form>
 
-          <div className="mt-6 text-center">
-            <button
+          <div className="mt-6 space-y-3">
+            <div className="text-center">
+              <button
+                type="button"
+                onClick={() => setIsLogin(!isLogin)}
+                className="text-sm text-muted-foreground hover:text-primary transition-colors"
+              >
+                {isLogin 
+                  ? 'Нет аккаунта? Зарегистрируйтесь' 
+                  : 'Уже есть аккаунт? Войдите'}
+              </button>
+            </div>
+            
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-card px-2 text-muted-foreground">или</span>
+              </div>
+            </div>
+
+            <Button
               type="button"
-              onClick={() => setIsLogin(!isLogin)}
-              className="text-sm text-muted-foreground hover:text-primary transition-colors"
+              variant="outline"
+              className="w-full"
+              onClick={() => {
+                setPhone('admin');
+                setPassword('admin');
+              }}
             >
-              {isLogin 
-                ? 'Нет аккаунта? Зарегистрируйтесь' 
-                : 'Уже есть аккаунт? Войдите'}
-            </button>
+              <Icon name="Shield" size={16} className="mr-2" />
+              Вход в админ-панель
+            </Button>
           </div>
         </CardContent>
       </Card>
